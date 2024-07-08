@@ -1,4 +1,6 @@
 use anchor_lang::prelude::*;
+use anchor_spl::token;
+use anchor_spl::token::{Token, MintTo, Transfer};
 
 declare_id!("3eEobEfomwPAfZBtMc7EQ9bMdf9d8kBarmLfuxRkM9Pf");
 
@@ -22,7 +24,7 @@ pub mod token_contract {
         token::mint_to(cpi_ctx, 10)?;
         
         Ok(())
-    }
+    } 
 }
 
 #[derive(Accounts)]

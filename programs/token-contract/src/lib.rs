@@ -27,6 +27,26 @@ pub mod token_contract {
     } 
 }
 
+pub fn transfer_token(ctx: Context<TransferToken>) -> Result<()> {
+    // Create the Transfer struct for our context
+    let transfer_instruction = Transfer{
+        from: ctx.accounts.from.to_account_info(),
+        to: ctx.accounts.to.to_account_info(),
+        authority: ctx.accounts.from_authority.to_account_info(),
+    };
+     
+    let cpi_program = ctx.accounts.token_program.to_account_info();
+    // Create the Context for our Transfer request
+    let cpi_ctx = CpiContext::new(cpi_program, transfer_instruction);
+
+    // Execute anchor's helper function to transfer tokens
+    anchor_spl::token::transfer(cpi_ctx, 5)?;
+
+    Ok(())
+}
+
+
+
 #[derive(Accounts)]
 #[derive(Accounts)]
 pub struct MintToken<'info> {
